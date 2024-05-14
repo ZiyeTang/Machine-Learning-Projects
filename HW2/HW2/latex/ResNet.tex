@@ -1,0 +1,60 @@
+\begin{Q}
+    \textbf{\Large ResNet.}
+    
+    In this problem, you will implement a simplified ResNet. You do not need to change arguments which are not mentioned here (but you of course could try and see what happens).
+    \begin{enumerate}
+        \item \texttt{[code]} Implement a class \texttt{Block}, which is a building block of ResNet. It is described in Figure 2 of \citet{resnet}, but also as follows.
+
+        The input to \texttt{Block} is of shape $(N,C,H,W)$, where $N$ denotes the batch size, $C$ denotes the number of channels, and $H$ and $W$ are the height and width of each channel. For each data example $\vx$ with shape $(C,H,W)$, the output of \texttt{block} is
+        \begin{align*}%\label{eq:block}
+            \texttt{Block}(\vx)=\sigma_r\del{\vx+f(\vx)},
+        \end{align*}
+        where $\sigma_r$ denotes the ReLU activation, and $f(\vx)$ also has shape $(C,H,W)$ and thus can be added to $\vx$. In detail, $f$ contains the following layers.
+        \begin{enumerate}
+            \item A \texttt{Conv2d} with $C$ input channels, $C$ output channels, kernel size 3, stride 1, padding 1, and no bias term.
+            \item A \texttt{BatchNorm2d} with $C$ features.
+            \item A ReLU layer.
+            \item Another \texttt{Conv2d} with the same arguments as i above.
+            \item Another \texttt{BatchNorm2d} with $C$ features.
+        \end{enumerate}
+        Because $3\times3$ kernels and padding 1 are used, the convolutional layers do not change the shape of each channel. Moreover, the number of channels are also kept unchanged. Therefore $f(\vx)$ does have the same shape as $\vx$.
+
+        Additional instructions are given in doscstrings in \texttt{hw2\_ResNet.py}.
+        
+        \textbf{Library routines:} \texttt{torch.nn.Conv2d and torch.nn.BatchNorm2d.}
+        
+        \textbf{Remark:} Use \texttt{bias=False} for the \texttt{Conv2d} layers.
+
+        \item \texttt{[code]}  Implement a (shallow) \texttt{ResNet} consists of the following parts:
+        \begin{enumerate}
+            \item A \texttt{Conv2d} with 1 input channel, $C$ output channels, kernel size 3, stride 2, padding 1, and no bias term.
+            \item A \texttt{BatchNorm2d} with $C$ features.
+            \item A ReLU layer.
+            \item A \texttt{MaxPool2d} with kernel size 2.
+            \item A \texttt{Block} with $C$ channels.
+            \item An \texttt{AdaptiveAvgPool2d} which for each channel takes the average of all elements.
+            \item A \texttt{Linear} with $C$ inputs and 10 outputs.
+        \end{enumerate}
+        Additional instructions are given in doscstrings in \texttt{hw2\_ResNet.py}.
+        
+        \textbf{Library routines:} \texttt{torch.nn.Conv2d, torch.nn.BatchNorm2d, torch.nn.MaxPool2D,}
+        
+        \texttt{torch.nn.AdaptiveAvgPool2d and torch.nn.Linear.}
+        
+        \textbf{Remark:} Use \texttt{bias=False} for the \texttt{Conv2d} layer.
+        
+        
+        \item  Train your \texttt{ResNet} implemented in (b) with different choices $C\in\{1,2,4\}$ on digits data and draw the training error vs the test error curves. To make your life easier, we provide you with the training script \texttt{utils\_train\_script.py} to load the digits data and train your ResNet with different choices for $C$. Therefore, you only need to plot the training and testing errors. Train your algorithms for 4000 epochs using SGD with mini batch size 128 and step size 0.1. See the docstrings in \texttt{hw2\_ResNet.py} for more details.  Include the resulting plot in your written handin. 
+        
+          For full credit, in addition to including the six train and test curves,
+          include at least one complete sentence describing how the train and test error (and in particular their gap) change with $C$, which itself corresponds to a notion of model complexity as discussed in lecture.
+        
+         \textbf{Library routines:} \texttt{torch.nn.CrossEntropyLoss, torch.autograd.backward, torch.no\_grad, torch.optim.Optimizer.zero\_grad, torch.autograd.grad, torch.nn.Module.parameters.}
+         
+     \item Train your \texttt{ResNet} implemented in (b) with $C=64$ on digits data and draw the training error vs the test error curve. You may use the same training script provided for the previous question to train your ResNet with $C=64$. Train your algorithms for 4000 epochs using SGD with mini batch size 128 and step size 0.1. See the docstrings in \texttt{hw2\_ResNet.py} for more details. Include the resulting plot in your written handin. 
+                
+         For full credit, additionally include at least one complete sentence comparing the train and test error with those in part (c).
+         
+         \textbf{Library routines:} \texttt{torch.nn.CrossEntropyLoss, torch.autograd.backward, torch.no\_grad, torch.optim.Optimizer.zero\_grad, torch.autograd.grad, torch.nn.Module.parameters.}
+    \end{enumerate}
+\end{Q}

@@ -1,0 +1,43 @@
+\begin{Q}
+\textbf{\Large Deep Net}\\ 
+
+We want to train a simple deep net $f(w_3, w_2, w_1, x) = w_3\sigma_2(\underbrace{w_2\sigma_1(\underbrace{w_1x}_{x_1})}_{x_2})$ where $w_1, w_2, w_3, x\in\mathbb{R}$ are real valued and $\sigma_1(u) = \sigma_2(u) = \frac{1}{1+\exp(-u)}$ is the sigmoid function.
+
+\begin{enumerate}
+% Subproblem description
+\item{Draw the computation graph that is specified by the function $f$.
+}
+
+ % Subproblem description
+\item{Compute $\frac{\partial \sigma_1}{\partial u}$ and provide the answer (1) using only $u$, the $\exp$-function and the square function, and (2) using only $\sigma_1(u)$.
+}
+
+% Subproblem description
+\item{Describe briefly what is meant by a `forward pass' and a `backward pass'?
+}
+% Subproblem description
+\item{Compute $\frac{\partial f}{\partial w_3}$. Which result should we retain from the forward pass in order to make computation of this derivative easy?
+
+}
+ 
+ % Subproblem description
+\item{Compute $\frac{\partial f}{\partial w_2}$. Make use of the second option obtained in part (b). Which results should we retain from the forward pass in order to make computation of this derivative easy?
+}
+
+% Subproblem description
+\item{Compute $\frac{\partial f}{\partial w_1}$. Make use of the second option obtained in part (b). Which results should we retain from the forward pass in order to make computation of this derivative easy? In what order should we compute the derivatives $\frac{\partial f}{\partial w_3}$, $\frac{\partial f}{\partial w_2}$ and $\frac{\partial f}{\partial w_1}$ in order to obtain the result as early as possible and in order to reuse as many results as possible. How is this order related to the forward pass?
+}
+
+% Subproblem description
+\item{We now want to train a convolutional neural net for 10-class classification of MNIST images which are of size $28\times 28$. As a first layer we use 20 2d convolutions each with a filter size of $5 \times 5$, a stride of 1 and a padding of 0. What is the output dimension after this layer? Subsequently we apply max-pooling with a size of $2\times 2$. What is the output dimension after this layer?
+}
+
+
+% Subproblem description
+\item{After having applied the  two layers (convolution + pooling) designed in part (g)  we want to use  a second convolution + max-pooling operation. The max-pooling operation has a filter size of $2\times 2$. The desired output should have 50 channels and should be of size $4 \times 4$. What is the filter size, the stride, and the channel dimension of the second convolution operation, assuming that padding is 0?
+}
+
+
+\end{enumerate}
+
+\end{Q}

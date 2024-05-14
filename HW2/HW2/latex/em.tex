@@ -1,0 +1,68 @@
+\begin{Q}
+\textbf{\Large  Expectation Maximization}\\
+In this problem, you will implement an expectation-maximization (EM) algorithm to cluster samples $\mathcal{D}=\{x^{(i)}\}_{i=1}^{n}$, with $x^{(i)} \in \{ 0,1 \}^{D}$ into groups. You will be using a mixture of Bernoullis model to tackle this problem. 
+
+
+\begin{enumerate}
+
+\item \textbf{Mixture of Bernoullis}. 
+
+\begin{enumerate}
+\item Assume each variable $x_d$ in the $D$-dimensional vector $x$ is drawn from a Bernoulli($q_{d}$) distribution, $P(x_{d}=1)=q_{d}$. Let $q=[q_{1}, \cdots, q_{D}] \in [0,1]^{D}$ be the resulting vector of Bernoulli parameters. Write an expression for $P(x|q)$ as a function of $q_d$ and $x_{d}$.
+
+\item Now suppose we have a mixture of $K$ Bernoulli distributions: each vector $x^{(i)}$ is drawn from some vector of Bernoulli random variables with parameters $p^{(k)}=[p_{1}^{(k)}, \cdots, p_{D}^{(k)}]$, that we call Bernoulli($p^{(k)}$). Let $p \triangleq \{p^{(1)}, \cdots , p^{(K)}\}$. 
+Let $\pi_{k}$ denote the probability that the $k^{\text{th}}$ set of Bernoulli parameters is chosen.
+Assume a distribution $\pi \triangleq \{ \pi_1, \dots, \pi_K \}$ over all possible Bernoulli parameters.
+Write an expression for $P(x^{(i)}|p, \pi)$, as a function of $\pi_{k}$ and $P(x^{(i)}|p^{(k)})$.
+
+\item Using the above, write an expression for the log-likelihood of i.i.d.\ data $\mathcal{D}$, i.e., $\log P(\mathcal{D}|\pi, p)$.
+
+\end{enumerate}
+
+\item  \textbf{Expectation step}. 
+
+\begin{enumerate}
+\item Let $z^{(i)} \triangleq [ z_1^{(i)}, \dots, z_K^{(i)}  ] \in \{ 0,1\}^{K}$ be an indicator vector, such that $z_{k}^{(i)}=1$ if $x^{(i)}$ was drawn from a Bernoulli($p^{(k)}$), and 0 otherwise.  
+Write down the expression of $P(z^{(i)}|\pi)$ as a function of $\pi_{k}$ and ${z_{k}^{(i)}}$. 
+
+\item Write down the expression of $P(x^{(i)}| z^{(i)}, p, \pi  )$ as a function of $P(x^{(i)}|p^{(k)})$ and $z_{k}^{(i)}$.
+
+\item Let $Z= \{ z^{(i)}\}_{i=1}^{n}$. Using the two quantities above, derive the likelihood of the data and latent variables $P(Z,\mathcal{D}|\pi, p)$.
+
+\item Let $\eta(z_{k}^{(i)}) = \mathbb{E} [z_{k}^{(i)}| x^{(i)}, \pi, p  ]$. Show that 
+
+$$
+\eta(z_{k}^{(i)})  = \frac{\pi_{k}  \prod_{d=1}^{D} (p_{d}^{(k)})^{x_{d}^{(i)} } (1-p_{d}^{k})^{1-x_{d}^{(i)}}  }{ \sum_{j}  \pi_{j}  \prod_{d=1}^{D} (p_{d}^{(j)})^{x_{d}^{(i)} } (1-p_{d}^{j})^{1-x_{d}^{(i)}}   }
+$$
+
+\item Let $\tilde{p}$, $\tilde{\pi}$ be the new parameters that we would like to maximize. $p$, $\pi$ are from the previous iteration. Use this to derive the following final expression for the E-step in the EM algorithm:
+
+$$
+\mathbb{E}[\log P(Z, \mathcal{D} | \tilde{ p}, \tilde{\pi}  ) | \mathcal{D} , p, \pi    ] = \sum_{i=1}^{n} \sum_{k=1}^{K} \eta(z_{k}^{(i)}) \Big[ \log{\tilde{\pi}_{k} } + \sum_{d=1}^{D} (  x_{d}^{(i)} \log \tilde{p}_{d}^{(k)}+ (1-x_{d}^{(i)}) \log(1-  \tilde{p}_{d}^{(k)}  )  )   \Big]
+$$
+\end{enumerate}
+
+
+\item  \textbf{Maximization step}. In the following, we will find $\tilde{p}$ and $\tilde{\pi}$ that maximize the above expression. 
+\begin{enumerate}
+\item Show that $\tilde{p}$ that maximizes the E-step is:
+
+$$
+\tilde{p}^{(k)} = \frac{  \sum_{i=1}^{n} \eta(z_{k}^{(i)} ) x^{(i)}   }{N_k},
+$$
+
+where $N_{k} = \sum_{i=1}^{n} \eta( z_{k}^{(i)} )$.
+
+\item Prove that the value of $\tilde{\pi}$ that maximizes the E-step is:
+
+$$
+\tilde{\pi}_{k} = \frac{N_{k}}{ \sum_{k'} N_{k'} }.
+$$
+
+\textbf{Hint:} $\tilde{\pi}$ needs to be a distribution. Use Lagrange multiplier to include this constraint into your objective function and solve it.
+
+\end{enumerate}
+
+\end{enumerate}
+\end{Q}
+          

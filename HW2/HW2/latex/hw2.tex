@@ -1,0 +1,169 @@
+        \documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,commath,dsfont}
+\usepackage{enumitem}
+\usepackage{framed}
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{float}
+\usepackage[round]{natbib}
+\usepackage{cleveref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[breakable]{tcolorbox}
+\tcbset{breakable}
+\usepackage{mathtools}
+\usepackage{subcaption}
+%\usepackage{symbols}
+
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\newcommand{\colbar}{\rule[-3mm]{.3mm}{1.5em}}
+\newcommand{\rowbar}{\rule[.5ex]{1.5em}{.3mm}}
+\DeclareMathOperator{\rank}{rank}
+
+% following loops stolen from djhsu
+\def\ddefloop#1{\ifx\ddefloop#1\else\ddef{#1}\expandafter\ddefloop\fi}
+% \bbA, \bbB, ...
+\def\ddef#1{\expandafter\def\csname bb#1\endcsname{\ensuremath{\mathbb{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZ\ddefloop
+
+% \cA, \cB, ...
+\def\ddef#1{\expandafter\def\csname c#1\endcsname{\ensuremath{\mathcal{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZ\ddefloop
+
+% \vA, \vB, ..., \va, \vb, ...
+\def\ddef#1{\expandafter\def\csname v#1\endcsname{\ensuremath{\boldsymbol{#1}}}}
+\ddefloop ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz\ddefloop
+
+% \valpha, \vbeta, ...,  \vGamma, \vDelta, ...,
+\def\ddef#1{\expandafter\def\csname v#1\endcsname{\ensuremath{\boldsymbol{\csname #1\endcsname}}}}
+\ddefloop {alpha}{beta}{gamma}{delta}{epsilon}{varepsilon}{zeta}{eta}{theta}{vartheta}{iota}{kappa}{lambda}{mu}{nu}{xi}{pi}{varpi}{rho}{varrho}{sigma}{varsigma}{tau}{upsilon}{phi}{varphi}{chi}{psi}{omega}{Gamma}{Delta}{Theta}{Lambda}{Xi}{Pi}{Sigma}{varSigma}{Upsilon}{Phi}{Psi}{Omega}{ell}\ddefloop
+
+\newcommand\T{{\scriptscriptstyle\mathsf{T}}}
+\def\diag{\textup{diag}}
+
+
+
+\def\SPAN{\textup{span}}
+\def\tu{\textup{u}}
+\def\R{\mathbb{R}}
+\def\E{\mathbb{E}}
+\def\Z{\mathbb{Z}}
+\def\be{\mathbf{e}}
+\def\nf{\nabla f}
+\def\veps{\varepsilon}
+\def\cl{\textup{cl}}
+\def\inte{\textup{int}}
+\def\dom{\textup{dom}}
+\def\Rad{\textup{Rad}}
+\def\lsq{\ell_{\textup{sq}}}
+\def\hcR{\widehat{\cR}}
+\def\hcRl{\hcR_\ell}
+\def\cRl{\cR_\ell}
+\def\hcE{\widehat{\cE}}
+\def\cEl{\cE_\ell}
+\def\hcEl{\hcE_\ell}
+\def\eps{\epsilon}
+\def\1{\mathds{1}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+\def\srelu{\sigma_{\textup{r}}}
+\def\vsrelu{\vec{\sigma_{\textup{r}}}}
+\def\vol{\textup{vol}}
+\def\hw{\textbf{[\texttt{hw2}]}\xspace}
+\def\hwcode{\textbf{[\texttt{hw2code}]}\xspace}
+
+\newcommand{\ip}[2]{\left\langle #1, #2 \right \rangle}
+\newcommand{\mjt}[1]{{\color{blue}\emph\textbf{[M:}~#1~\textbf{]}}}
+\newcommand{\sahand}[1]{{\color{green}\emph\textbf{[Sah:}~#1~\textbf{]}}}
+
+
+\newtheorem{fact}{Fact}
+\newtheorem{lemma}{Lemma}
+\newtheorem{condition}{Condition}
+\theoremstyle{definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+\newenvironment{Q}
+{%
+	\clearpage
+	\item
+}
+{%
+	\phantom{s} %lol doesn't work
+	\bigskip
+	\textbf{Solution.}
+}
+
+\title{CS 446 / ECE 449 --- Homework 2}
+\author{\emph{your NetID here}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\noindent\textbf{Instructions.}
+	\begin{itemize}
+		\item
+		Homework is due \textbf{\color{red}Tuesday, Feb. 21, at noon CDT}; no late homework accepted.
+		
+		\item
+		Everyone must submit individually at gradescope under \texttt{hw2} and \texttt{hw2code}.
+		
+		\item
+		The ``written'' submission at \texttt{hw2} \textbf{must be typed}, and submitted in
+		any format gradescope accepts (to be safe, submit a PDF).  You may use \LaTeX, markdown,
+		google docs, MS word, whatever you like; but it must be typed!
+		
+		\item
+		When submitting at \texttt{hw2}, gradescope will ask you to mark out boxes
+		around each of your answers; please do this precisely!
+		
+		\item
+		Please make sure your NetID is clear and large on the first page of the homework.
+		
+		\item
+		Your solution \textbf{must} be written in your own words.
+		Please see the course webpage for full academic integrity information.
+		Briefly, you may have high-level discussions with at most 3 classmates,
+		whose NetIDs you should place on the first page of your solutions,
+		and you should cite any external reference you use; despite all this,
+		your solution must be written in your own words.
+		
+		\item
+		We reserve the right to reduce the auto-graded score for
+		\texttt{hw2code} if we detect funny business (e.g., your solution
+		lacks any algorithm and hard-codes answers you obtained from
+		someone else, or simply via trial-and-error with the autograder).
+		
+		\item
+		When submitting to \texttt{hw2code}, only upload \texttt{hw2\_ResNet.py}. Additional files will be ignored.
+		
+		\item
+		Gradescope coding questions are marked by ``\texttt{[code]}.''
+		
+	\end{itemize}
+	
+	
+	\begin{enumerate}[font={\Large\bfseries}]
+        \input{EM.tex} 
+        \input{DeepNet.tex}
+
+        \input{ResNet.tex} 
+		
+	\end{enumerate}
+
+\newpage
+
+\bibliography{shortbib}
+\bibliographystyle{plainnat}
+
+\end{document}
